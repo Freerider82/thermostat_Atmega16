@@ -18,8 +18,8 @@ void send_SoundTextMessage( uint8_t );
 uint8_t controlPower(uint16_t,uint16_t);
 uint8_t checkChange(uint8_t);
 void settingPreferences(uint8_t);
+void init_mc(void);
 
-OWI_device allDevices[MAX_DEVICES];
 uint8_t rom[8];
 uint8_t config_ds18b20[2]={0,0};
 uint16_t e_tempHigh EEMEM = T_HIGH_START;
@@ -60,35 +60,9 @@ int main(void)
 	_FDEV_SETUP_WRITE);
 	stdout=&mystdout;
 	
-	#ifdef _DEBUG
-	DDRB=1<<DDB1 ;//| 1<<DDB3;
-	#endif
-	//TCCR0=(1<<WGM00) | (1<<COM01) | (0<<COM00) | (1<<WGM01) | (1<<CS02) | (0<<CS01) | (1<<CS00);
-	//OCR0=OCR0_START;
-	//
-	//
-	//TCCR1B=4;
-	//TCNT1=0;
-	//TIMSK=1<<OCIE1A;
-	//OCR1A=8;
+	init_mc();
 	
-	TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (0<<CS00);
-	TIMSK=1<<OCIE0;
-	OCR0=8;
-	
-	// Timer/Counter 1 initialization
-	// Clock source: System Clock
-	// Clock value: 1,953 kHz
-	// Mode: Fast PWM top=0x00FF
-	// OC1A output: Non-Inverted PWM	
-	// Timer Period: 0,13107 s
-	// Output Pulse(s):
-	// OC1A Period: 0,13107 s Width: 65,793 ms
-	
-	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
-	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
-	TCNT1=0;
-	OCR1A=OCR1A_START;
+	OWI_device allDevices[MAX_DEVICES];
 	
 	uint16_t temperature[2] = {0,0};
 	
@@ -104,17 +78,6 @@ int main(void)
 	uint8_t delta=0;
 	
 	flag.byte=0; //Все флаги в 0
-	
-	/*Тест убрать потом*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -150,9 +113,7 @@ int main(void)
 	
 	
 	
-	while (1){
-		//cursorxy(0,2);
-		//printf("byte %d",flag.byte);
+	while (1){		
 		
 		if (flag.ts.Settings==0)
 		{
@@ -403,6 +364,31 @@ void settingPreferences(uint8_t item){
 		
 	}
 }
+/*****************************************************************************/
+void init_mc(){
+	
+	#ifdef _DEBUG
+	DDRB=1<<DDB1 ;
+	#endif
+	
+	TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (0<<CS00);
+	TIMSK=1<<OCIE0;
+	OCR0=8;
+	
+	// Timer/Counter 1 initialization
+	// Clock source: System Clock
+	// Clock value: 1,953 kHz
+	// Mode: Fast PWM top=0x00FF
+	// OC1A output: Non-Inverted PWM
+	// Timer Period: 0,13107 s
+	// Output Pulse(s):
+	// OC1A Period: 0,13107 s Width: 65,793 ms
+	
+	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
+	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
+	TCNT1=0;
+	OCR1A=OCR1A_START;
+}
 /***********************Прерывания********************************/
 
 ISR(TIMER0_COMP_vect ){
@@ -446,6 +432,7 @@ ISR(TIMER0_COMP_vect ){
 	
 	
 }
+
 /*
 Настравиваемые параметры:
 1.Верхний предел температуры //Предел t

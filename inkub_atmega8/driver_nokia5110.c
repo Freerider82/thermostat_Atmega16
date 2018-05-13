@@ -131,7 +131,7 @@ void printBigNumber(uint8_t cursor_x,uint8_t cursor_y,uint16_t number,uint8_t fl
 			if(i==9){cursorxy(cursor_x,cursor_y+9);};
 		}
 		writedata(0);
-		
+		 
 		cursorxy(cursor_x+=11,cursor_y);
 	}
 	if(flagPoint==1){
