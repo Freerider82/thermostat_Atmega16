@@ -42,7 +42,7 @@
 
 #define  T_HIGH_START		300
 
-#define  OCR1A_START			128
+#define  OCR1A_START		128
 #define  DELTA_PWM			10
 #define  SHORT_LIMIT_TEMP	10 //Предел температуры в градусах*10
 #endif

@@ -20,10 +20,7 @@
 *                         $Date: Thursday, August 19, 2004 14:27:18 UTC $
 ****************************************************************************/
 #include "ds18b20/compilers.h"
-#include "ds18b20/OWIHighLevelFunctions.h"
-#include "ds18b20/OWIBitFunctions.h"
-#include "ds18b20/OWIPolled.h"
-#include "ds18b20/OWIcrc.h"
+#include "module_ds18b20.h"
 
 /*! \brief  Sends one byte of data on the 1-Wire(R) bus(es).
  *  
@@ -382,4 +379,96 @@ unsigned char FindFamily(unsigned char familyID, OWI_device * devices, unsigned 
         i++;
     }
     return SEARCH_ERROR;
+}
+/*****************************************************************************/
+uint8_t  DS18B20_WriteScratchpad(uint8_t bus, uint8_t * id, uint8_t th, uint8_t tl,uint8_t resolution){
+	
+	uint8_t scratchpad[9];
+	uint8_t i;	
+	
+	OWI_DetectPresence(bus);
+	OWI_MatchRom(id, bus);
+	OWI_SendByte(DS18B20_WRITE_SCRATCHPAD ,bus);
+	OWI_SendByte(th ,bus);
+	OWI_SendByte(tl ,bus);
+	OWI_SendByte(resolution ,bus);
+	//Проверка записалась ли конфигурация ?
+	OWI_DetectPresence(bus);
+	OWI_MatchRom(id, bus);
+	OWI_SendByte(DS18B20_READ_SCRATCHPAD, bus);
+	for (i = 0; i<=8; i++){
+		scratchpad[i] = OWI_ReceiveByte(bus);
+	}
+	
+	if(OWI_CheckScratchPadCRC(scratchpad)!= OWI_CRC_OK)	return READ_CRC_ERROR;
+	
+	if((scratchpad[2]!=th)||(scratchpad[3]!=tl)||((scratchpad[4]&0x60)!=resolution)){
+		return WRITE_ERROR;
+	}
+	return WRITE_SUCCESSFUL;
+}
+/*****************************************************************************/
+uint8_t DS18B20_ReadConfig(uint8_t bus, uint8_t * id, uint8_t * _config){
+	uint8_t scratchpad[9];
+	uint8_t i;
+		
+	/*подаем сигнал сброса
+	команду для адресации устройства на шине
+	подаем команду - запук преобразования */
+	OWI_DetectPresence(bus);
+	OWI_MatchRom(id, bus);
+	OWI_SendByte(DS18B20_READ_SCRATCHPAD, bus);
+	for (i = 0; i<=8; i++){
+		scratchpad[i] = OWI_ReceiveByte(bus);
+	}
+	
+
+	if(OWI_CheckScratchPadCRC(scratchpad)!= OWI_CRC_OK)	return READ_CRC_ERROR;
+
+	*_config=scratchpad[4];
+	return READ_SUCCESSFUL;
+}
+/*****************************************************************************/
+uint8_t DS18B20_ReadTemperature(uint8_t bus, uint8_t * id, uint16_t* temperature)
+{
+	uint8_t scratchpad[9];
+	
+	
+	/*подаем сигнал сброса
+	команду для адресации устройства на шине
+	подаем команду - запук преобразования */
+	OWI_DetectPresence(bus);
+	OWI_MatchRom(id, bus);
+	OWI_SendByte(DS18B20_CONVERT_T ,bus);
+
+	/*ждем, когда датчик завершит преобразование*/
+	while (!OWI_ReadBit(bus));
+
+	/*подаем сигнал сброса
+	команду для адресации устройства на шине
+	команду - чтение внутренней памяти
+	затем считываем внутреннюю память датчика в массив
+	*/
+	OWI_DetectPresence(bus);
+	OWI_MatchRom(id, bus);
+	OWI_SendByte(DS18B20_READ_SCRATCHPAD, bus);
+	for (uint8_t i = 0; i<=8; i++){
+		scratchpad[i] = OWI_ReceiveByte(bus);
+	}
+
+	if(OWI_CheckScratchPadCRC(scratchpad)!= OWI_CRC_OK) 	return READ_CRC_ERROR;
+	
+	*temperature = (uint16_t)scratchpad[0];
+	*temperature |= ((uint16_t)scratchpad[1] << 8);
+	if ((*temperature & 0x8000) == 1){
+		return READ_NEGATIVE;
+	}
+	
+	uint8_t fraction=0;
+	fraction = (uint8_t)((*temperature)&15);
+	fraction=(uint8_t)(((uint64_t)fraction*625)/1000);
+	*temperature>>=4;
+	*temperature=(*temperature)*10+fraction;
+	
+	return READ_SUCCESSFUL;
 }

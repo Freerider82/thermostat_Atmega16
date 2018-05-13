@@ -50,5 +50,7 @@ void OWI_MatchRom(unsigned char * romValue, unsigned char pin);
 unsigned char OWI_SearchRom(unsigned char * bitPattern, unsigned char lastDeviation, unsigned char pin);
 unsigned char OWI_SearchDevices(OWI_device * devices, unsigned char numDevices, unsigned char pin, unsigned char *num);
 unsigned char FindFamily(unsigned char familyID, OWI_device * devices, unsigned char numDevices, unsigned char lastNum);
-
+uint8_t  DS18B20_WriteScratchpad(uint8_t , uint8_t * , uint8_t , uint8_t ,uint8_t );
+uint8_t DS18B20_ReadConfig(uint8_t , uint8_t * , uint8_t * );
+uint8_t DS18B20_ReadTemperature(uint8_t , uint8_t *, uint16_t* );
 #endif

@@ -15,12 +15,12 @@ OWIHighLevelFunctions.d OWIHighLevelFunctions.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
+ .././module_ds18b20.h .././ds18b20/OWIPolled.h .././ds18b20/OWIdefs.h \
+ .././ds18b20/compilers.h .././ds18b20/OWIDeviceSpecific.h \
  .././ds18b20/OWIHighLevelFunctions.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
- .././ds18b20/OWIBitFunctions.h .././ds18b20/OWIdefs.h \
- .././ds18b20/compilers.h .././ds18b20/OWIPolled.h \
- .././ds18b20/OWIDeviceSpecific.h .././ds18b20/OWIPolled.h \
+ .././ds18b20/OWIBitFunctions.h .././ds18b20/OWIPolled.h \
  .././ds18b20/OWIcrc.h
 
 .././ds18b20/compilers.h:
@@ -55,6 +55,16 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
+.././module_ds18b20.h:
+
+.././ds18b20/OWIPolled.h:
+
+.././ds18b20/OWIdefs.h:
+
+.././ds18b20/compilers.h:
+
+.././ds18b20/OWIDeviceSpecific.h:
+
 .././ds18b20/OWIHighLevelFunctions.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
@@ -62,14 +72,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
 
 .././ds18b20/OWIBitFunctions.h:
-
-.././ds18b20/OWIdefs.h:
-
-.././ds18b20/compilers.h:
-
-.././ds18b20/OWIPolled.h:
-
-.././ds18b20/OWIDeviceSpecific.h:
 
 .././ds18b20/OWIPolled.h:
 
