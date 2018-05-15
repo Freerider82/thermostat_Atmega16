@@ -20,8 +20,6 @@ uint8_t checkChange(uint8_t);
 void settingPreferences(uint8_t);
 void init_mc(void);
 
-uint8_t rom[8];
-uint8_t config_ds18b20[2]={0,0};
 uint16_t e_tempHigh EEMEM = T_HIGH_START;
 
 
@@ -81,39 +79,30 @@ int main(void)
 	
 	
 	
-	/*Основная программа  */
 	
+	//Чтение из памяти EEPROM начальных или установленных значений
 	tempHigh=eeprom_read_word(&e_tempHigh);
 	
 	if(tempHigh==0xFFFF){
 		eeprom_write_word(&e_tempHigh,T_HIGH_START);
-		
 		tempHigh=T_HIGH_START;
 	}
 	
-	initLCD();
-	
-	OWI_Init(BUS);
+	//Определение  кол-ва датчиков, запись их адрессов в allDevices
 	crcFlag = OWI_SearchDevices(allDevices, MAX_DEVICES, BUS, &iDevices);
-	//Совпадает кол-во датчиков и CRC все ОК
-	if ((iDevices == MAX_DEVICES)&&(crcFlag != SEARCH_CRC_ERROR)){
-		
-		clearram();
-		printf("ВСЕ ОК");
-		
-		} else{
-		clearram();
-		printf("К-во датчиков %d",iDevices);
-		send_SoundTextMessage(crcFlag);
-		
-	}
-	for(uint8_t i=0;i<2;i++){
+	if(iDevices!=MAX_DEVICES) crcFlag=FEWER_DEVICES;
+	send_SoundTextMessage(crcFlag);	
+	cursorxy(0,1);
+	printf("К-во дат-ков %d",iDevices);
+	
+	//Настройка датчиков на опр.разрешение
+	for(uint8_t i=0;i<MAX_DEVICES;i++){
 		while(DS18B20_WriteScratchpad(BUS, allDevices[i].id, 0, 0, DS18B20_12BIT_RES)!=WRITE_SUCCESSFUL);
 	}
 	
 	
 	
-	while (1){		
+	while (1){
 		
 		if (flag.ts.Settings==0)
 		{
@@ -226,13 +215,6 @@ int main(void)
 			}
 		}
 		else{
-			
-			
-			
-			
-			
-			
-			
 			//Опрос энкодера и кнопки
 			while(1){
 				if((checkChange(*ptrInISR)!=0)||(flag.ts.ButtonIsPressedInISR!=0)){
@@ -258,20 +240,34 @@ int main(void)
 }
 
 /*****************************************************************************/
-void send_SoundTextMessage( uint8_t code_error){
+void send_SoundTextMessage( uint8_t code_Message){
 	
 	clearram();
-	switch(code_error){
+	switch(code_Message){
+		
+		case SEARCH_SUCCESSFUL:
+		printf("ВСЕ ОК");
+		break;
+		
 		case READ_CRC_ERROR:
 		cursorxy(0,1);
 		printf("ОШИБКА ЧТЕНИЯ ");
 		break;
+		
+		case FEWER_DEVICES:
+		printf("Датчиков мало");
+		break;
+		
 		case READ_NEGATIVE:
 		printf("Отриц темп-ра");
 		break;
 		
 		case SEARCH_CRC_ERROR:
 		printf("ОШ ПОИСКА CRC");
+		break;
+		
+		case SEARCH_ERROR:
+		printf("НЕТ ДАТЧИКА");
 		break;
 		
 		case TEMP_IS_DOWN:
@@ -319,8 +315,8 @@ void settingPreferences(uint8_t item){
 			printf(string[item]);
 			
 			if(itemMenu==0){
-				itemMenu=item+1;	
-						
+				itemMenu=item+1;
+				
 				switch(item){
 					case 0: limitHigh=1270;ptrInISR=&tempHigh;break;
 					case 1: limitHigh=254;ptrInISR=&OCR1A;break;
@@ -388,6 +384,9 @@ void init_mc(){
 	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
 	TCNT1=0;
 	OCR1A=OCR1A_START;
+	
+	initLCD();
+	OWI_Init(BUS);
 }
 /***********************Прерывания********************************/
 

@@ -314,7 +314,7 @@ unsigned char OWI_SearchDevices(OWI_device * devices, unsigned char numDevices, 
 		//Копирование 8 байт  из currentID в newID
       memcpy(newID, currentID, 8);
       if (!OWI_DetectPresence(pin)){
-		  //printf("no datchik");
+		 printf("no datchik");
         return SEARCH_ERROR;        //Вернуть ошибку если датчика нет
       };
       lastDeviation = OWI_SearchRom(newID, lastDeviation, pin);

@@ -21,16 +21,15 @@
 //количество устройств на шине 1Wire
 #define MAX_DEVICES       2
 
-//коды ошибок для функции чтения температуры
+//коды сообщений для функции чтения температуры
 #define READ_SUCCESSFUL   0x00
 #define READ_CRC_ERROR    0x01
 #define READ_NEGATIVE     0x02
 #define WRITE_ERROR       0x03
 #define WRITE_SUCCESSFUL  0x04
-//коды сообщений
 #define TEMP_IS_DOWN	  0x06
 #define TEMP_IS_STABLE	  0x07
-
+#define FEWER_DEVICES	  0x08	
 
 #define SEARCH_SENSORS 0x00
 #define SENSORS_FOUND 0xff
@@ -40,7 +39,7 @@
 #define DS18B20_11BIT_RES 64 // 11 bit thermometer resolution
 #define DS18B20_12BIT_RES 96 // 12 bit thermometer resolution
 
-#define  T_HIGH_START		300
+#define  T_HIGH_START		370
 
 #define  OCR1A_START		128
 #define  DELTA_PWM			10
