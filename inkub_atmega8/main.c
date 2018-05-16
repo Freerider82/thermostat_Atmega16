@@ -21,7 +21,8 @@ void settingPreferences(uint8_t);
 void init_mc(void);
 
 uint16_t e_tempHigh EEMEM = T_HIGH_START;
-
+uint8_t e_valuePWM EEMEM = OCR1A_START;
+uint8_t  e_deltaRunOutTemp EEMEM = DELTA_RUN_OUT_TEMP_START;
 
 
 uint16_t selectedItem=1;
@@ -33,7 +34,7 @@ uint8_t regAB=0;
 
 uint8_t statePort=0;
 uint16_t tempHigh;//Верхний предел
-uint16_t delta_runOutTemp=8;
+uint16_t delta_runOutTemp; //Выбег температуры
 uint16_t limitHigh=0;
 uint16_t manualOrAuto=0;
 
@@ -85,7 +86,12 @@ int main(void)
 	
 	if(tempHigh==0xFFFF){
 		eeprom_write_word(&e_tempHigh,T_HIGH_START);
-		tempHigh=T_HIGH_START;
+		//tempHigh=T_HIGH_START;
+		tempHigh=eeprom_read_word(&e_tempHigh);
+		eeprom_write_byte(&e_valuePWM,OCR1A_START);
+		eeprom_write_byte(&e_deltaRunOutTemp,DELTA_RUN_OUT_TEMP_START);
+		//delta_runOutTemp=DELTA_RUN_OUT_TEMP_START;
+		delta_runOutTemp=eeprom_read_byte(&e_deltaRunOutTemp);
 	}
 	
 	//Определение  кол-ва датчиков, запись их адрессов в allDevices
@@ -100,20 +106,17 @@ int main(void)
 		while(DS18B20_WriteScratchpad(BUS, allDevices[i].id, 0, 0, DS18B20_12BIT_RES)!=WRITE_SUCCESSFUL);
 	}
 	
-	
-	
 	while (1){
-		
 		if (flag.ts.Settings==0)
 		{
-			
-			for(uint8_t i=0;i<2;){
+			//Чтение температуры 2 датчиков
+			for(uint8_t i=0;i<MAX_DEVICES;){
 				crcFlag = DS18B20_ReadTemperature(BUS, allDevices[i].id, &temperature[i]);
 				if (crcFlag != READ_SUCCESSFUL){
-					clearram();
-					printf("Датчик %d",i+1);
-					cursorxy(0,1);
 					send_SoundTextMessage(crcFlag);
+					cursorxy(0,1);
+					printf("Датчик %d",i+1);
+					ClearBit(DDR_POWER,PIN_POWER);
 				}
 				else{
 					i++;
@@ -123,11 +126,13 @@ int main(void)
 			averageTemperature=(temperature[0]+temperature[1])/2;
 			
 			
-			//flag.ts.ValueHighIsChange флаг 0- valueHigh не изменилось, 1- изменилось стало
-			//больше на 1 градус или равным tempHigh
+			//
 			flag.ts.Power=controlPower(averageTemperature,valueHigh);
-			/*Управление нагрузкой вавтоматическом режиме */
+			/*Управление нагрузкой в автоматическом режиме */
 			{
+				//flag.ts.ValueHighIsChange флаг 0- valueHigh не изменилось,
+				// 1- изменилось стало больше на 1 (SHORT_LIMIT_TEMP) градус или равным tempHigh
+			    // Сброс ValueHighIsChange при измерении выбега температуры
 				if(flag.ts.ValueHighIsChange==0){
 					
 					if(averageTemperature<=tempHigh-SHORT_LIMIT_TEMP){
@@ -145,17 +150,18 @@ int main(void)
 				if(flag.ts.Power==POWER_ON){
 					flag.ts.RunOutIsCalculate=0;
 					run_out_temperature=valueHigh;
-					
+					//Счетчик для проверки стабильности температуры 
 					if(count==0){
 						lastValue=averageTemperature;
 					}
 					count++;
 					if(count==10){
 						count=0;
+						//Если температура не меняется и верхний предел != установленому в настройках пределу 
 						if((lastValue==averageTemperature)&&(valueHigh!=tempHigh)){
 							//Увеличиваем мощность если тек темп-ра = прошлой
 							//и пока не достигли верхнего предела
-							OCR1A+=((OCR1A<256)&&(manualOrAuto&1==1))? 1:0;
+							OCR1A+=((OCR1A<255)&&(manualOrAuto&1==1))? 1:0;
 						}
 					}
 					
@@ -167,7 +173,7 @@ int main(void)
 					}
 				}
 				else{
-					
+					//flag.ts.Power==POWER_OFF
 					//При выключенном измеряем выбег температуры run_out_temperature
 					if(averageTemperature>=run_out_temperature){
 						run_out_temperature=averageTemperature;
@@ -176,7 +182,7 @@ int main(void)
 						flag.ts.RunOutIsCalculate=1;
 						flag.ts.ValueHighIsChange=0;
 						if(run_out_temperature>valueHigh+delta_runOutTemp){
-							OCR1A-=((OCR1A>delta)&&(manualOrAuto&1==1))? delta:0;//delta это наскоолько изменится ШИМ
+							OCR1A-=((OCR1A>delta)&&(manualOrAuto&1==1))? delta:0;//delta это насколько изменится ШИМ
 						}
 					}
 				}
@@ -197,9 +203,10 @@ int main(void)
 			cursorxy(0,5);
 			printf("Средняя %d.%d",INTEGER(averageTemperature),FRACTION(averageTemperature));
 			
+			//Если кнопка энкодера не нажата
 			if(BitIsSet(PIN_ENCODER,PIN_BIT_ENCODER_BUTTON)) flag.ts.ButtonIsPressed=0;
 			
-			
+			//Если кнопка энкодера нажата переходим в режим настроек
 			if((BitIsClear(PIN_ENCODER,PIN_BIT_ENCODER_BUTTON))&&(flag.ts.ButtonIsPressed==0)){
 				ClearBit(DDR_POWER,PIN_POWER);
 				itemMenu=0;
@@ -215,23 +222,20 @@ int main(void)
 			}
 		}
 		else{
+			//flag.ts.Settings=1
 			//Опрос энкодера и кнопки
 			while(1){
+				//Если прокрутили энкодер или нажали на кнопку
 				if((checkChange(*ptrInISR)!=0)||(flag.ts.ButtonIsPressedInISR!=0)){
-					//Если произошли изменения
-					//if((selectedItem>=5)&&(selectedItem<10)) selectedItem=0;
-					//if(selectedItem>10)	selectedItem=4;
+					//Если ptrInISR изменилось на отрицательное число 					
+					if((*ptrInISR&0x8000)==0x8000 )	*ptrInISR=limitHigh;
 					
-					if((*ptrInISR&0x8000)==0x8000 ){
-						
-						*ptrInISR=limitHigh;
-					}
 					if(*ptrInISR>limitHigh) *ptrInISR=0;
 					
 					settingPreferences(selectedItem);
 					
-					cursorxy(0,5);
-					printf("item %x fl %d",*ptrInISR,flag.ts.Settings );
+					//cursorxy(0,5);
+					//printf("item %x fl %d",*ptrInISR,flag.ts.Settings );
 					break;
 				}
 			}
@@ -242,7 +246,7 @@ int main(void)
 /*****************************************************************************/
 void send_SoundTextMessage( uint8_t code_Message){
 	
-	clearram();
+		clearram();
 	switch(code_Message){
 		
 		case SEARCH_SUCCESSFUL:
@@ -383,7 +387,7 @@ void init_mc(){
 	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
 	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
 	TCNT1=0;
-	OCR1A=OCR1A_START;
+	OCR1A=eeprom_read_byte(&e_valuePWM);
 	
 	initLCD();
 	OWI_Init(BUS);
