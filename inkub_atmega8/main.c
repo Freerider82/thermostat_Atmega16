@@ -21,8 +21,9 @@ void settingPreferences(uint8_t);
 void init_mc(void);
 
 uint16_t e_tempHigh EEMEM = T_HIGH_START;
-uint8_t e_valuePWM EEMEM = OCR1A_START;
+uint8_t  e_valuePWM EEMEM = OCR1A_START;
 uint8_t  e_deltaRunOutTemp EEMEM = DELTA_RUN_OUT_TEMP_START;
+uint8_t  e_manualOrAuto EEMEM = 0;
 
 
 uint16_t selectedItem=1;
@@ -59,7 +60,7 @@ int main(void)
 	_FDEV_SETUP_WRITE);
 	stdout=&mystdout;
 	
-	init_mc();
+	
 	
 	OWI_device allDevices[MAX_DEVICES];
 	
@@ -78,26 +79,26 @@ int main(void)
 	
 	flag.byte=0; //Все флаги в 0
 	
-	
-	
-	
+	init_mc();
 	//Чтение из памяти EEPROM начальных или установленных значений
-	tempHigh=eeprom_read_word(&e_tempHigh);
+	tempHigh=eeprom_read_word(&e_tempHigh);	
 	
 	if(tempHigh==0xFFFF){
 		eeprom_write_word(&e_tempHigh,T_HIGH_START);
-		//tempHigh=T_HIGH_START;
-		tempHigh=eeprom_read_word(&e_tempHigh);
 		eeprom_write_byte(&e_valuePWM,OCR1A_START);
-		eeprom_write_byte(&e_deltaRunOutTemp,DELTA_RUN_OUT_TEMP_START);
-		//delta_runOutTemp=DELTA_RUN_OUT_TEMP_START;
-		delta_runOutTemp=eeprom_read_byte(&e_deltaRunOutTemp);
+		eeprom_write_byte(&e_deltaRunOutTemp,DELTA_RUN_OUT_TEMP_START);		
+		eeprom_write_byte(&e_manualOrAuto,0);
 	}
+	
+	tempHigh=eeprom_read_word(&e_tempHigh);
+	delta_runOutTemp=eeprom_read_byte(&e_deltaRunOutTemp);
+	OCR1A=eeprom_read_byte(&e_valuePWM);
+	manualOrAuto=eeprom_read_byte(&e_manualOrAuto);
 	
 	//Определение  кол-ва датчиков, запись их адрессов в allDevices
 	crcFlag = OWI_SearchDevices(allDevices, MAX_DEVICES, BUS, &iDevices);
 	if(iDevices!=MAX_DEVICES) crcFlag=FEWER_DEVICES;
-	send_SoundTextMessage(crcFlag);	
+	send_SoundTextMessage(crcFlag);
 	cursorxy(0,1);
 	printf("К-во дат-ков %d",iDevices);
 	
@@ -132,7 +133,7 @@ int main(void)
 			{
 				//flag.ts.ValueHighIsChange флаг 0- valueHigh не изменилось,
 				// 1- изменилось стало больше на 1 (SHORT_LIMIT_TEMP) градус или равным tempHigh
-			    // Сброс ValueHighIsChange при измерении выбега температуры
+				// Сброс ValueHighIsChange при измерении выбега температуры
 				if(flag.ts.ValueHighIsChange==0){
 					
 					if(averageTemperature<=tempHigh-SHORT_LIMIT_TEMP){
@@ -150,14 +151,14 @@ int main(void)
 				if(flag.ts.Power==POWER_ON){
 					flag.ts.RunOutIsCalculate=0;
 					run_out_temperature=valueHigh;
-					//Счетчик для проверки стабильности температуры 
+					//Счетчик для проверки стабильности температуры
 					if(count==0){
 						lastValue=averageTemperature;
 					}
 					count++;
 					if(count==10){
 						count=0;
-						//Если температура не меняется и верхний предел != установленому в настройках пределу 
+						//Если температура не меняется и верхний предел != установленому в настройках пределу
 						if((lastValue==averageTemperature)&&(valueHigh!=tempHigh)){
 							//Увеличиваем мощность если тек темп-ра = прошлой
 							//и пока не достигли верхнего предела
@@ -227,7 +228,7 @@ int main(void)
 			while(1){
 				//Если прокрутили энкодер или нажали на кнопку
 				if((checkChange(*ptrInISR)!=0)||(flag.ts.ButtonIsPressedInISR!=0)){
-					//Если ptrInISR изменилось на отрицательное число 					
+					//Если ptrInISR изменилось на отрицательное число
 					if((*ptrInISR&0x8000)==0x8000 )	*ptrInISR=limitHigh;
 					
 					if(*ptrInISR>limitHigh) *ptrInISR=0;
@@ -246,7 +247,7 @@ int main(void)
 /*****************************************************************************/
 void send_SoundTextMessage( uint8_t code_Message){
 	
-		clearram();
+	clearram();
 	switch(code_Message){
 		
 		case SEARCH_SUCCESSFUL:
@@ -332,9 +333,15 @@ void settingPreferences(uint8_t item){
 				ptrInISR=&selectedItem;
 				itemMenu=0;
 			}
-			}else{
+		}
+		else{
+			//flag.ts.ButtonIsPressedInISR=0 выходим из режима настроек
 			cli();
 			flag.ts.Settings=0;
+			eeprom_update_word(&e_tempHigh,tempHigh);
+			eeprom_update_byte(&e_valuePWM,OCR1A);
+			eeprom_update_byte(&e_deltaRunOutTemp,delta_runOutTemp);
+			eeprom_update_byte(&e_manualOrAuto,manualOrAuto);
 		}
 		flag.ts.ButtonIsPressedInISR=0;
 	}
@@ -387,7 +394,6 @@ void init_mc(){
 	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
 	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
 	TCNT1=0;
-	OCR1A=eeprom_read_byte(&e_valuePWM);
 	
 	initLCD();
 	OWI_Init(BUS);

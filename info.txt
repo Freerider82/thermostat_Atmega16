@@ -6,26 +6,6 @@ Target "CoreBuild" in file "C:\Program Files (x86)\Atmel\Studio\7.0\Vs\Compiler.
 	Task "RunCompilerTask"
 		Shell Utils Path C:\Program Files (x86)\Atmel\Studio\7.0\shellUtils
 		C:\Program Files (x86)\Atmel\Studio\7.0\shellUtils\make.exe all --jobs 4 --output-sync 
-		Building file: .././OWIHighLevelFunctions.c
-		Invoking: AVR/GNU C Compiler : 5.4.0
-		"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe"  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega16a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\gcc\dev\atmega16a" -c -std=gnu99 -MD -MP -MF "OWIHighLevelFunctions.d" -MT"OWIHighLevelFunctions.d" -MT"OWIHighLevelFunctions.o"   -o "OWIHighLevelFunctions.o" ".././OWIHighLevelFunctions.c" 
-		Finished building: .././OWIHighLevelFunctions.c
-		In file included from .././ds18b20/compilers.h:27:0,
-		                 from .././OWIHighLevelFunctions.c:22:
-c:\program files (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h(92,3): warning: #warning "F_CPU not defined for <util/delay.h>" [-Wcpp]
-		 # warning "F_CPU not defined for <util/delay.h>"
-		   ^
-		In file included from .././module_ds18b20.h:4:0,
-		                 from .././OWIHighLevelFunctions.c:23:
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\ds18b20\OWIPolled.h(46,2): warning: #warning CPU_FREQUENCY=F_CPU ? [-Wcpp]
-		 #warning CPU_FREQUENCY=F_CPU ?
-		  ^
-		.././OWIHighLevelFunctions.c: In function 'OWI_SearchDevices':
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\OWIHighLevelFunctions.c(317,4): warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
-		    printf("no datchik");
-		    ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\OWIHighLevelFunctions.c(317,4): warning: incompatible implicit declaration of built-in function 'printf'
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\OWIHighLevelFunctions.c(317,4): info: include '<stdio.h>' or provide a declaration of 'printf'
 		Building file: .././main.c
 		Invoking: AVR/GNU C Compiler : 5.4.0
 		In file included from .././module_ds18b20.h:4:0,
@@ -36,43 +16,43 @@ D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\ds18b20\OWIPolled.h(46,2): warning
 		In file included from .././project_inkub.h:9:0,
 		                 from .././main.c:8:
 		.././main.c: In function 'main':
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(57,43): warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(59,43): warning: initialization from incompatible pointer type [-Wincompatible-pointer-types]
 		  static FILE mystdout = FDEV_SETUP_STREAM(lcd_putchar, NULL,
 		                                           ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(57,43): info: (near initialization for 'mystdout.put')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(158,42): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
-		        OCR1A+=((OCR1A<256)&&(manualOrAuto&1==1))? 1:0;
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(59,43): info: (near initialization for 'mystdout.put')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(165,42): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+		        OCR1A+=((OCR1A<255)&&(manualOrAuto&1==1))? 1:0;
 		                                          ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(164,51): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(171,51): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
 		       OCR1A+=((OCR1A<256-DELTA_PWM)&&(manualOrAuto&1==1))? DELTA_PWM:0;
 		"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe"  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega16a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\gcc\dev\atmega16a" -c -std=gnu99 -MD -MP -MF "main.d" -MT"main.d" -MT"main.o"   -o "main.o" ".././main.c" 
 		Finished building: .././main.c
 		                                                   ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(179,44): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
-		        OCR1A-=((OCR1A>delta)&&(manualOrAuto&1==1))? delta:0;//delta ¤ªþ ýð¸úþþû¹úþ ø÷üõýøª¸  +L¦
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(186,44): warning: suggest parentheses around comparison in operand of '&' [-Wparentheses]
+		        OCR1A-=((OCR1A>delta)&&(manualOrAuto&1==1))? delta:0;//delta ¤ªþ ýð¸úþû¹úþ ø÷üõýøª¸  +L¦
 		                                            ^
 		.././main.c: In function 'settingPreferences':
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,21): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,21): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 		  uint8_t *string[]={" ¦¨õôõû t "," ¦þ•ýþ¸ª¹ "," Tvñõó t "," ¦º¢/Lòªþ "," Tv¿þô "};
 		                     ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,21): info: (near initialization for 'string[0]')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,34): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,21): info: (near initialization for 'string[0]')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,34): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 		  uint8_t *string[]={" ¦¨õôõû t "," ¦þ•ýþ¸ª¹ "," Tvñõó t "," ¦º¢/Lòªþ "," Tv¿þô "};
 		                                  ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,34): info: (near initialization for 'string[1]')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,47): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,34): info: (near initialization for 'string[1]')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,47): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 		  uint8_t *string[]={" ¦¨õôõû t "," ¦þ•ýþ¸ª¹ "," Tvñõó t "," ¦º¢/Lòªþ "," Tv¿þô "};
 		                                               ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,47): info: (near initialization for 'string[2]')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,59): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,47): info: (near initialization for 'string[2]')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,59): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 		  uint8_t *string[]={" ¦¨õôõû t "," ¦þ•ýþ¸ª¹ "," Tvñõó t "," ¦º¢/Lòªþ "," Tv¿þô "};
 		                                                           ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,59): info: (near initialization for 'string[3]')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,72): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,59): info: (near initialization for 'string[3]')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,72): warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 		  uint8_t *string[]={" ¦¨õôõû t "," ¦þ•ýþ¸ª¹ "," Tvñõó t "," ¦º¢/Lòªþ "," Tv¿þô "};
 		                                                                        ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(308,72): info: (near initialization for 'string[4]')
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(315,11): warning: pointer targets in passing argument 1 of 'printf' differ in signedness [-Wpointer-sign]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(313,72): info: (near initialization for 'string[4]')
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(320,11): warning: pointer targets in passing argument 1 of 'printf' differ in signedness [-Wpointer-sign]
 		    printf(string[item]);
 		           ^
 		In file included from .././project_inkub.h:9:0,
@@ -80,7 +60,7 @@ D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(315,11): warning: pointer t
 c:\program files (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h(651,12): info: expected 'const char *' but argument is of type 'uint8_t * {aka unsigned char *}'
 		 extern int printf(const char *__fmt, ...);
 		            ^
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(322,36): warning: assignment discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(327,36): warning: assignment discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
 		      case 1: limitHigh=254;ptrInISR=&OCR1A;break;
 		                                    ^
 		In file included from .././main.c:10:0:
@@ -89,7 +69,7 @@ D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\myUart.h(30,12): warning: 'uart_pu
 		 static int uart_putchar(char c, FILE *stream){
 		            ^
 		.././main.c: In function 'main':
-D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(155,9): warning: 'lastValue' may be used uninitialized in this function [-Wmaybe-uninitialized]
+D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(162,9): warning: 'lastValue' may be used uninitialized in this function [-Wmaybe-uninitialized]
 		       if((lastValue==averageTemperature)&&(valueHigh!=tempHigh)){
 		         ^
 		Building target: inkub_atmega8.elf
@@ -102,12 +82,12 @@ D:\Oleg\Mcs\Atmel\inkub_atmega8\inkub_atmega8\main.c(155,9): warning: 'lastValue
 		"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "inkub_atmega8.elf" "inkub_atmega8.srec"
 		"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "inkub_atmega8.elf"
 		   text	   data	    bss	    dec	    hex	filename
-		   9012	    346	     19	   9377	   24a1	inkub_atmega8.elf
+		   9132	    333	     21	   9486	   250e	inkub_atmega8.elf
 	Done executing task "RunCompilerTask".
 	Task "RunOutputFileVerifyTask"
-				Program Memory Usage 	:	9356 bytes   57,1 % Full
-				Data Memory Usage 		:	363 bytes   35,4 % Full
-				EEPROM Memory Usage 	:	2 bytes   0,4 % Full
+				Program Memory Usage 	:	9460 bytes   57,7 % Full
+				Data Memory Usage 		:	349 bytes   34,1 % Full
+				EEPROM Memory Usage 	:	5 bytes   1,0 % Full
 	Done executing task "RunOutputFileVerifyTask".
 Done building target "CoreBuild" in project "inkub_atmega8.cproj".
 Target "PostBuildEvent" skipped, due to false condition; ('$(PostBuildEvent)' != '') was evaluated as ('' != '').
@@ -117,3 +97,4 @@ Done building project "inkub_atmega8.cproj".
 
 Build succeeded.
 ========== Build: 1 succeeded or up-to-date, 0 failed, 0 skipped ==========
+
