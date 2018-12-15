@@ -64,11 +64,28 @@ Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
+ .text          0x00000000        0x0 dht11.o
+ .data          0x00000000        0x0 dht11.o
+ .bss           0x00000000        0x0 dht11.o
+ .text.dht11_getdata
+                0x00000000      0x11c dht11.o
+ .text.dht11_gettemperature
+                0x00000000        0x8 dht11.o
+ .text.dht11_gethumidity
+                0x00000000        0x8 dht11.o
+ .debug_info    0x00000000      0x3fb dht11.o
+ .debug_abbrev  0x00000000      0x1a4 dht11.o
+ .debug_loc     0x00000000      0x3a1 dht11.o
+ .debug_aranges
+                0x00000000       0x30 dht11.o
+ .debug_ranges  0x00000000       0x20 dht11.o
+ .debug_line    0x00000000      0x253 dht11.o
+ .debug_str     0x00000000      0x212 dht11.o
+ .comment       0x00000000       0x31 dht11.o
+ .debug_frame   0x00000000       0x60 dht11.o
  .text          0x00000000        0x0 driver_nokia5110.o
  .data          0x00000000        0x0 driver_nokia5110.o
  .bss           0x00000000        0x0 driver_nokia5110.o
- .text.contrastLCD
-                0x00000000       0x1c driver_nokia5110.o
  .rodata.mas_tochka
                 0x00000000        0x5 driver_nokia5110.o
  .rodata.czels  0x00000000       0x14 driver_nokia5110.o
@@ -329,6 +346,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
+LOAD dht11.o
 LOAD driver_nokia5110.o
 LOAD main.o
 LOAD OWIcrc.o
@@ -442,7 +460,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x23ac
+.text           0x00000000     0x24a2
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
                 0x00000000                __vector_default
@@ -546,152 +564,155 @@ END GROUP
                 0x000006a4                clearram
  .text.initLCD  0x000006cc       0x4c driver_nokia5110.o
                 0x000006cc                initLCD
+ .text.contrastLCD
+                0x00000718       0x1c driver_nokia5110.o
+                0x00000718                contrastLCD
  .text.lcd_put_char
-                0x00000718       0x60 driver_nokia5110.o
-                0x00000718                lcd_put_char
+                0x00000734       0x74 driver_nokia5110.o
+                0x00000734                lcd_put_char
  .text.printBigNumber
-                0x00000778      0x208 driver_nokia5110.o
-                0x00000778                printBigNumber
+                0x000007a8      0x208 driver_nokia5110.o
+                0x000007a8                printBigNumber
  .text.lcd_print
-                0x00000980       0x26 driver_nokia5110.o
-                0x00000980                lcd_print
+                0x000009b0       0x26 driver_nokia5110.o
+                0x000009b0                lcd_print
  .text.lcd_putchar
-                0x000009a6       0x1e main.o
+                0x000009d6       0x1e main.o
  .text.send_SoundTextMessage
-                0x000009c4       0xc8 main.o
-                0x000009c4                send_SoundTextMessage
+                0x000009f4       0xc8 main.o
+                0x000009f4                send_SoundTextMessage
  .text.controlPower
-                0x00000a8c       0x12 main.o
-                0x00000a8c                controlPower
+                0x00000abc       0x12 main.o
+                0x00000abc                controlPower
  .text.checkChange
-                0x00000a9e       0x1e main.o
-                0x00000a9e                checkChange
+                0x00000ace       0x1e main.o
+                0x00000ace                checkChange
  .text.settingPreferences
-                0x00000abc      0x400 main.o
-                0x00000abc                settingPreferences
- .text.init_mc  0x00000ebc       0x26 main.o
-                0x00000ebc                init_mc
- .text.main     0x00000ee2      0x5f8 main.o
-                0x00000ee2                main
+                0x00000aec      0x4a0 main.o
+                0x00000aec                settingPreferences
+ .text.init_mc  0x00000f8c       0x26 main.o
+                0x00000f8c                init_mc
+ .text.main     0x00000fb2      0x61e main.o
+                0x00000fb2                main
  .text.__vector_19
-                0x000014da       0xf4 main.o
-                0x000014da                __vector_19
+                0x000015d0       0xf4 main.o
+                0x000015d0                __vector_19
  .text.OWI_ComputeCRC8
-                0x000015ce       0x20 OWIcrc.o
-                0x000015ce                OWI_ComputeCRC8
+                0x000016c4       0x20 OWIcrc.o
+                0x000016c4                OWI_ComputeCRC8
  .text.OWI_CheckRomCRC
-                0x000015ee       0x40 OWIcrc.o
-                0x000015ee                OWI_CheckRomCRC
+                0x000016e4       0x40 OWIcrc.o
+                0x000016e4                OWI_CheckRomCRC
  .text.OWI_CheckScratchPadCRC
-                0x0000162e       0x40 OWIcrc.o
-                0x0000162e                OWI_CheckScratchPadCRC
+                0x00001724       0x40 OWIcrc.o
+                0x00001724                OWI_CheckScratchPadCRC
  .text.OWI_SendByte
-                0x0000166e       0x2c OWIHighLevelFunctions.o
-                0x0000166e                OWI_SendByte
+                0x00001764       0x2c OWIHighLevelFunctions.o
+                0x00001764                OWI_SendByte
  .text.OWI_ReceiveByte
-                0x0000169a       0x26 OWIHighLevelFunctions.o
-                0x0000169a                OWI_ReceiveByte
+                0x00001790       0x26 OWIHighLevelFunctions.o
+                0x00001790                OWI_ReceiveByte
  .text.OWI_MatchRom
-                0x000016c0       0x34 OWIHighLevelFunctions.o
-                0x000016c0                OWI_MatchRom
+                0x000017b6       0x34 OWIHighLevelFunctions.o
+                0x000017b6                OWI_MatchRom
  .text.OWI_SearchRom
-                0x000016f4       0xca OWIHighLevelFunctions.o
-                0x000016f4                OWI_SearchRom
+                0x000017ea       0xca OWIHighLevelFunctions.o
+                0x000017ea                OWI_SearchRom
  .text.OWI_SearchDevices
-                0x000017be       0xe0 OWIHighLevelFunctions.o
-                0x000017be                OWI_SearchDevices
+                0x000018b4       0xe0 OWIHighLevelFunctions.o
+                0x000018b4                OWI_SearchDevices
  .text.DS18B20_WriteScratchpad
-                0x0000189e       0xea OWIHighLevelFunctions.o
-                0x0000189e                DS18B20_WriteScratchpad
+                0x00001994       0xea OWIHighLevelFunctions.o
+                0x00001994                DS18B20_WriteScratchpad
  .text.DS18B20_ReadTemperature
-                0x00001988      0x1b6 OWIHighLevelFunctions.o
-                0x00001988                DS18B20_ReadTemperature
+                0x00001a7e      0x1b6 OWIHighLevelFunctions.o
+                0x00001a7e                DS18B20_ReadTemperature
  .text.OWI_Init
-                0x00001b3e       0x18 OWISWBitFunctions.o
-                0x00001b3e                OWI_Init
+                0x00001c34       0x18 OWISWBitFunctions.o
+                0x00001c34                OWI_Init
  .text.OWI_WriteBit1
-                0x00001b56       0x2a OWISWBitFunctions.o
-                0x00001b56                OWI_WriteBit1
+                0x00001c4c       0x2a OWISWBitFunctions.o
+                0x00001c4c                OWI_WriteBit1
  .text.OWI_WriteBit0
-                0x00001b80       0x32 OWISWBitFunctions.o
-                0x00001b80                OWI_WriteBit0
+                0x00001c76       0x32 OWISWBitFunctions.o
+                0x00001c76                OWI_WriteBit0
  .text.OWI_ReadBit
-                0x00001bb2       0x36 OWISWBitFunctions.o
-                0x00001bb2                OWI_ReadBit
+                0x00001ca8       0x36 OWISWBitFunctions.o
+                0x00001ca8                OWI_ReadBit
  .text.OWI_DetectPresence
-                0x00001be8       0x44 OWISWBitFunctions.o
-                0x00001be8                OWI_DetectPresence
+                0x00001cde       0x44 OWISWBitFunctions.o
+                0x00001cde                OWI_DetectPresence
  .text.libgcc.mul
-                0x00001c2c       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                0x00001c2c                __umulhisi3
+                0x00001d22       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
+                0x00001d22                __umulhisi3
  .text.libgcc.div
-                0x00001c4a       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
-                0x00001c4a                __umoddi3
-                0x00001c4e                __udivdi3
-                0x00001c50                __udivdi3_umoddi3
+                0x00001d40       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivdi3.o)
+                0x00001d40                __umoddi3
+                0x00001d44                __udivdi3
+                0x00001d46                __udivdi3_umoddi3
  .text.libgcc.div
-                0x00001c66       0xa2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
-                0x00001c66                __udivmod64
+                0x00001d5c       0xa2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmod64.o)
+                0x00001d5c                __udivmod64
  .text.libgcc.builtins
-                0x00001d08       0x32 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashldi3.o)
-                0x00001d08                __ashldi3
- .text.libgcc   0x00001d3a       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
-                0x00001d3a                __adddi3
- .text.libgcc   0x00001d4c       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_subdi3.o)
-                0x00001d4c                __subdi3
+                0x00001dfe       0x32 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_ashldi3.o)
+                0x00001dfe                __ashldi3
+ .text.libgcc   0x00001e30       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_adddi3.o)
+                0x00001e30                __adddi3
+ .text.libgcc   0x00001e42       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_subdi3.o)
+                0x00001e42                __subdi3
  .text.avr-libc
-                0x00001d5e       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(printf.o)
-                0x00001d5e                printf
+                0x00001e54       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(printf.o)
+                0x00001e54                printf
  .text.avr-libc
-                0x00001d8a      0x3c2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x00001d8a                vfprintf
+                0x00001e80      0x3c2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x00001e80                vfprintf
  .text.avr-libc
-                0x0000214c       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x0000214c                strnlen_P
+                0x00002242       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x00002242                strnlen_P
  .text.avr-libc
-                0x00002162       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00002162                strnlen
+                0x00002258       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x00002258                strnlen
  .text.avr-libc
-                0x00002178       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00002178                fputc
+                0x0000226e       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x0000226e                fputc
  .text.avr-libc
-                0x000021f0       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x000021f0                __ultoa_invert
+                0x000022e6       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x000022e6                __ultoa_invert
  .text.avr-libc
-                0x000022ac       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
-                0x000022ac                eeprom_read_byte
+                0x000023a2       0x10 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
+                0x000023a2                eeprom_read_byte
  .text.avr-libc
-                0x000022bc        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
-                0x000022bc                eeprom_read_word
+                0x000023b2        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
+                0x000023b2                eeprom_read_word
  .text.avr-libc
-                0x000022c8       0x22 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
-                0x000022c8                eeprom_update_byte
-                0x000022ca                eeprom_update_r18
+                0x000023be       0x22 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
+                0x000023be                eeprom_update_byte
+                0x000023c0                eeprom_update_r18
  .text.avr-libc
-                0x000022ea        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
-                0x000022ea                eeprom_update_word
+                0x000023e0        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
+                0x000023e0                eeprom_update_word
  .text.avr-libc
-                0x000022f6       0x1a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
-                0x000022f6                eeprom_write_byte
-                0x000022f8                eeprom_write_r18
+                0x000023ec       0x1a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
+                0x000023ec                eeprom_write_byte
+                0x000023ee                eeprom_write_r18
  .text.avr-libc
-                0x00002310        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
-                0x00002310                eeprom_write_word
+                0x00002406        0xa C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
+                0x00002406                eeprom_write_word
  .text.avr-libc
-                0x0000231a       0x20 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
-                0x0000231a                eeprom_read_block
-                0x0000231e                eeprom_read_blraw
+                0x00002410       0x20 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
+                0x00002410                eeprom_read_block
+                0x00002414                eeprom_read_blraw
  .text.libgcc.prologue
-                0x0000233a       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
-                0x0000233a                __prologue_saves__
+                0x00002430       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
+                0x00002430                __prologue_saves__
  .text.libgcc.prologue
-                0x00002372       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
-                0x00002372                __epilogue_restores__
-                0x000023a8                . = ALIGN (0x2)
+                0x00002468       0x36 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
+                0x00002468                __epilogue_restores__
+                0x0000249e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000023a8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000023a8                _exit
-                0x000023a8                exit
+ .fini9         0x0000249e        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x0000249e                _exit
+                0x0000249e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -710,70 +731,76 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000023a8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000249e        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000023ac                _etext = .
+                0x000024a2                _etext = .
 
-.data           0x00800060      0x148 load address 0x000023ac
+.data           0x00800060      0x164 load address 0x000024a2
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
- .data.mystdout.2432
+ .data.mystdout.2436
                 0x00800060        0xe main.o
- .data.selectedItem
+ .data.contrastLcd
                 0x0080006e        0x2 main.o
-                0x0080006e                selectedItem
+                0x0080006e                contrastLcd
+ .data.selectedItem
+                0x00800070        0x2 main.o
+                0x00800070                selectedItem
+ .data.e_contrastLCD
+                0x00800072        0x1 main.o
+                0x00800072                e_contrastLCD
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00800070        0xa main.o
+ .rodata        0x00800073       0x18 main.o
  *(.rodata*)
  .rodata.str1.1
-                0x0080007a      0x122 main.o
-                                0x128 (size before relaxing)
+                0x0080008b      0x12d main.o
+                                0x13a (size before relaxing)
  .rodata.str1.1
-                0x0080019c        0xb OWIHighLevelFunctions.o
+                0x008001b8        0xb OWIHighLevelFunctions.o
  *(.gnu.linkonce.r*)
-                0x008001a8                . = ALIGN (0x2)
- *fill*         0x008001a7        0x1 
-                0x008001a8                _edata = .
-                0x008001a8                PROVIDE (__data_end, .)
+                0x008001c4                . = ALIGN (0x2)
+ *fill*         0x008001c3        0x1 
+                0x008001c4                _edata = .
+                0x008001c4                PROVIDE (__data_end, .)
 
-.bss            0x008001a8       0x15
-                0x008001a8                PROVIDE (__bss_start, .)
+.bss            0x008001c4       0x15
+                0x008001c4                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.last.2476
-                0x008001a8        0x1 main.o
+ .bss.last.2480
+                0x008001c4        0x1 main.o
  .bss.manualOrAuto
-                0x008001a9        0x2 main.o
-                0x008001a9                manualOrAuto
+                0x008001c5        0x2 main.o
+                0x008001c5                manualOrAuto
  .bss.limitHigh
-                0x008001ab        0x2 main.o
-                0x008001ab                limitHigh
+                0x008001c7        0x2 main.o
+                0x008001c7                limitHigh
  .bss.statePort
-                0x008001ad        0x1 main.o
-                0x008001ad                statePort
- .bss.regAB     0x008001ae        0x1 main.o
-                0x008001ae                regAB
- .bss.itemMenu  0x008001af        0x1 main.o
-                0x008001af                itemMenu
+                0x008001c9        0x1 main.o
+                0x008001c9                statePort
+ .bss.regAB     0x008001ca        0x1 main.o
+                0x008001ca                regAB
+ .bss.itemMenu  0x008001cb        0x1 main.o
+                0x008001cb                itemMenu
  *(COMMON)
- COMMON         0x008001b0        0x7 main.o
-                0x008001b0                flag
-                0x008001b1                delta_runOutTemp
-                0x008001b3                tempHigh
-                0x008001b5                ptrInISR
- COMMON         0x008001b7        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
-                0x008001b7                __iob
-                0x008001bd                PROVIDE (__bss_end, .)
-                0x000023ac                __data_load_start = LOADADDR (.data)
-                0x000024f4                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008001cc        0x7 main.o
+                0x008001cc                flag
+                0x008001cd                delta_runOutTemp
+                0x008001cf                tempHigh
+                0x008001d1                ptrInISR
+ COMMON         0x008001d3        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
+                0x008001d3                __iob
+                0x008001d9                PROVIDE (__bss_end, .)
+                0x000024a2                __data_load_start = LOADADDR (.data)
+                0x00002606                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008001bd        0x0
+.noinit         0x008001d9        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008001bd                _end = .
+                0x008001d9                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x5
@@ -882,83 +909,83 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x2db2
+.debug_info     0x00000000     0x2ebc
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x52e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
- .debug_info    0x0000052e      0x78c driver_nokia5110.o
- .debug_info    0x00000cba      0xce5 main.o
- .debug_info    0x0000199f      0x1c0 OWIcrc.o
- .debug_info    0x00001b5f      0x9ca OWIHighLevelFunctions.o
- .debug_info    0x00002529      0x3d9 OWISWBitFunctions.o
- .debug_info    0x00002902       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
- .debug_info    0x000029ad       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
- .debug_info    0x00002a58       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
- .debug_info    0x00002b04       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
- .debug_info    0x00002bb0       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
- .debug_info    0x00002c5b       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
- .debug_info    0x00002d06       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
+ .debug_info    0x0000052e      0x7c2 driver_nokia5110.o
+ .debug_info    0x00000cf0      0xdb9 main.o
+ .debug_info    0x00001aa9      0x1c0 OWIcrc.o
+ .debug_info    0x00001c69      0x9ca OWIHighLevelFunctions.o
+ .debug_info    0x00002633      0x3d9 OWISWBitFunctions.o
+ .debug_info    0x00002a0c       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
+ .debug_info    0x00002ab7       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
+ .debug_info    0x00002b62       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
+ .debug_info    0x00002c0e       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
+ .debug_info    0x00002cba       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
+ .debug_info    0x00002d65       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
+ .debug_info    0x00002e10       0xac C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
 
-.debug_abbrev   0x00000000      0xe6c
+.debug_abbrev   0x00000000      0xe52
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4e7 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
  .debug_abbrev  0x000004e7      0x1a7 driver_nokia5110.o
- .debug_abbrev  0x0000068e      0x33f main.o
- .debug_abbrev  0x000009cd       0xbf OWIcrc.o
- .debug_abbrev  0x00000a8c      0x21e OWIHighLevelFunctions.o
- .debug_abbrev  0x00000caa      0x136 OWISWBitFunctions.o
- .debug_abbrev  0x00000de0       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
- .debug_abbrev  0x00000df4       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
- .debug_abbrev  0x00000e08       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
- .debug_abbrev  0x00000e1c       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
- .debug_abbrev  0x00000e30       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
- .debug_abbrev  0x00000e44       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
- .debug_abbrev  0x00000e58       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
+ .debug_abbrev  0x0000068e      0x325 main.o
+ .debug_abbrev  0x000009b3       0xbf OWIcrc.o
+ .debug_abbrev  0x00000a72      0x21e OWIHighLevelFunctions.o
+ .debug_abbrev  0x00000c90      0x136 OWISWBitFunctions.o
+ .debug_abbrev  0x00000dc6       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
+ .debug_abbrev  0x00000dda       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
+ .debug_abbrev  0x00000dee       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
+ .debug_abbrev  0x00000e02       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
+ .debug_abbrev  0x00000e16       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
+ .debug_abbrev  0x00000e2a       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
+ .debug_abbrev  0x00000e3e       0x14 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
 
-.debug_line     0x00000000     0x19ca
+.debug_line     0x00000000     0x1a16
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
- .debug_line    0x00000115      0x424 driver_nokia5110.o
- .debug_line    0x00000539      0x84b main.o
- .debug_line    0x00000d84      0x13c OWIcrc.o
- .debug_line    0x00000ec0      0x523 OWIHighLevelFunctions.o
- .debug_line    0x000013e3      0x256 OWISWBitFunctions.o
- .debug_line    0x00001639       0x7a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
- .debug_line    0x000016b3       0x67 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
- .debug_line    0x0000171a       0xb0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
- .debug_line    0x000017ca       0x62 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
- .debug_line    0x0000182c       0x98 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
- .debug_line    0x000018c4       0x5b C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
- .debug_line    0x0000191f       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
+ .debug_line    0x00000115      0x43a driver_nokia5110.o
+ .debug_line    0x0000054f      0x881 main.o
+ .debug_line    0x00000dd0      0x13c OWIcrc.o
+ .debug_line    0x00000f0c      0x523 OWIHighLevelFunctions.o
+ .debug_line    0x0000142f      0x256 OWISWBitFunctions.o
+ .debug_line    0x00001685       0x7a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_byte.o)
+ .debug_line    0x000016ff       0x67 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_word.o)
+ .debug_line    0x00001766       0xb0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_byte.o)
+ .debug_line    0x00001816       0x62 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eeupd_word.o)
+ .debug_line    0x00001878       0x98 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_byte.o)
+ .debug_line    0x00001910       0x5b C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eewr_word.o)
+ .debug_line    0x0000196b       0xab C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5\libatmega16a.a(eerd_block.o)
 
-.debug_frame    0x00000000      0x62c
+.debug_frame    0x00000000      0x638
  *(.debug_frame)
- .debug_frame   0x00000000      0x144 driver_nokia5110.o
- .debug_frame   0x00000144      0x1a8 main.o
- .debug_frame   0x000002ec       0x94 OWIcrc.o
- .debug_frame   0x00000380      0x248 OWIHighLevelFunctions.o
- .debug_frame   0x000005c8       0x64 OWISWBitFunctions.o
+ .debug_frame   0x00000000      0x148 driver_nokia5110.o
+ .debug_frame   0x00000148      0x1b0 main.o
+ .debug_frame   0x000002f8       0x94 OWIcrc.o
+ .debug_frame   0x0000038c      0x248 OWIHighLevelFunctions.o
+ .debug_frame   0x000005d4       0x64 OWISWBitFunctions.o
 
-.debug_str      0x00000000      0x9a4
+.debug_str      0x00000000      0x9ba
  *(.debug_str)
  .debug_str     0x00000000      0x1af C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.150/gcc/dev/atmega16a/avr5/crtatmega16a.o
- .debug_str     0x000001af      0x2a9 driver_nokia5110.o
+ .debug_str     0x000001af      0x29d driver_nokia5110.o
                                 0x2e9 (size before relaxing)
- .debug_str     0x00000458      0x2fc main.o
-                                0x4e5 (size before relaxing)
- .debug_str     0x00000754       0x84 OWIcrc.o
+ .debug_str     0x0000044c      0x31e main.o
+                                0x513 (size before relaxing)
+ .debug_str     0x0000076a       0x84 OWIcrc.o
                                 0x1cf (size before relaxing)
- .debug_str     0x000007d8      0x17c OWIHighLevelFunctions.o
+ .debug_str     0x000007ee      0x17c OWIHighLevelFunctions.o
                                 0x38b (size before relaxing)
- .debug_str     0x00000954       0x50 OWISWBitFunctions.o
+ .debug_str     0x0000096a       0x50 OWISWBitFunctions.o
                                 0x21e (size before relaxing)
 
-.debug_loc      0x00000000     0x25c1
+.debug_loc      0x00000000     0x25cc
  *(.debug_loc)
- .debug_loc     0x00000000      0x86f driver_nokia5110.o
- .debug_loc     0x0000086f      0x7ba main.o
- .debug_loc     0x00001029      0x38c OWIcrc.o
- .debug_loc     0x000013b5      0xf50 OWIHighLevelFunctions.o
- .debug_loc     0x00002305      0x2bc OWISWBitFunctions.o
+ .debug_loc     0x00000000      0x860 driver_nokia5110.o
+ .debug_loc     0x00000860      0x7d4 main.o
+ .debug_loc     0x00001034      0x38c OWIcrc.o
+ .debug_loc     0x000013c0      0xf50 OWIHighLevelFunctions.o
+ .debug_loc     0x00002310      0x2bc OWISWBitFunctions.o
 
 .debug_macinfo
  *(.debug_macinfo)

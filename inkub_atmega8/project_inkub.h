@@ -11,6 +11,8 @@
 
 #include "bits_macros.h"
 #include "driver_nokia5110.h"
+#include "dht11.h"
+
 // Мощность упр ШИМ поэтому вкл/откл DDR выход/вход
 #define DDR_POWER	DDRD
 #define PIN_POWER	DDD5

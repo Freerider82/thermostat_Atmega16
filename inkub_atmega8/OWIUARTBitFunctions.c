@@ -49,9 +49,9 @@
 
 
 
-/*! \brief Initialization of the one wire bus. (Polled UART driver)
+/*! \brief Initialization of the one wire BUS. (Polled UART driver)
  *  
- *  This function initializes the 1-Wire bus by configuring the UART.
+ *  This function initializes the 1-Wire BUS by configuring the UART.
  */
 void OWI_Init()
 {
@@ -73,13 +73,13 @@ void OWI_Init()
 }
 
 
-/*! \brief  Write and read one bit to/from the 1-Wire bus. (Polled UART driver)
+/*! \brief  Write and read one bit to/from the 1-Wire BUS. (Polled UART driver)
  *
- *  Writes one bit to the bus and returns the value read from the bus.
+ *  Writes one bit to the BUS and returns the value read from the BUS.
  *
- *  \param  outValue    The value to transmit on the bus.
+ *  \param  outValue    The value to transmit on the BUS.
  *
- *  \return The value received by the UART from the bus.
+ *  \return The value received by the UART from the BUS.
  */
 unsigned char OWI_TouchBit(unsigned char outValue)
 {
@@ -95,10 +95,10 @@ unsigned char OWI_TouchBit(unsigned char outValue)
     return OWI_UART_DATA_REGISTER;
 }
 
-/*! \brief Write a '1' bit to the bus(es). (Polled UART DRIVER)
+/*! \brief Write a '1' bit to the BUS(es). (Polled UART DRIVER)
  *
  *  Generates the waveform for transmission of a '1' bit on the 1-Wire
- *  bus.
+ *  BUS.
  */
 void OWI_WriteBit1()
 {
@@ -106,10 +106,10 @@ void OWI_WriteBit1()
 }
 
 
-/*! \brief  Write a '0' to the bus(es). (Polled UART DRIVER)
+/*! \brief  Write a '0' to the BUS(es). (Polled UART DRIVER)
  *
  *  Generates the waveform for transmission of a '0' bit on the 1-Wire(R)
- *  bus.
+ *  BUS.
  */
 void OWI_WriteBit0()
 {
@@ -117,16 +117,16 @@ void OWI_WriteBit0()
 }
 
 
-/*! \brief  Read a bit from the bus(es). (Polled UART DRIVER)
+/*! \brief  Read a bit from the BUS(es). (Polled UART DRIVER)
  *
- *  Generates the waveform for reception of a bit on the 1-Wire(R) bus(es).
+ *  Generates the waveform for reception of a bit on the 1-Wire(R) BUS(es).
  *
- *  \return The value read from the bus (0 or 1).
+ *  \return The value read from the BUS (0 or 1).
  */
 unsigned char OWI_ReadBit()
 {
      // Return 1 if the value received matches the value sent.
-     // Return 0 else. (A slave held the bus low).
+     // Return 0 else. (A slave held the BUS low).
      return (OWI_TouchBit(OWI_UART_READ_BIT) == OWI_UART_READ_BIT);
 }
 
@@ -135,9 +135,9 @@ unsigned char OWI_ReadBit()
  *  UART DRIVER)
  *
  *  Generates the waveform for transmission of a Reset pulse on the 
- *  1-Wire(R) bus and listens for presence signals.
+ *  1-Wire(R) BUS and listens for presence signals.
  *
- *  \return A bitmask of the buses where a presence signal was detected.
+ *  \return A bitmask of the BUSes where a presence signal was detected.
  */
 unsigned char OWI_DetectPresence()
 {

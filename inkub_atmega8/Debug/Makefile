@@ -37,6 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../dht11.c \
 ../driver_nokia5110.c \
 ../main.c \
 ../OWIcrc.c \
@@ -52,6 +53,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+dht11.o \
 driver_nokia5110.o \
 main.o \
 OWIcrc.o \
@@ -60,6 +62,7 @@ OWISWBitFunctions.o \
 OWIUARTBitFunctions.o
 
 OBJS_AS_ARGS +=  \
+dht11.o \
 driver_nokia5110.o \
 main.o \
 OWIcrc.o \
@@ -68,6 +71,7 @@ OWISWBitFunctions.o \
 OWIUARTBitFunctions.o
 
 C_DEPS +=  \
+dht11.d \
 driver_nokia5110.d \
 main.d \
 OWIcrc.d \
@@ -76,6 +80,7 @@ OWISWBitFunctions.d \
 OWIUARTBitFunctions.d
 
 C_DEPS_AS_ARGS +=  \
+dht11.d \
 driver_nokia5110.d \
 main.d \
 OWIcrc.d \
@@ -97,6 +102,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

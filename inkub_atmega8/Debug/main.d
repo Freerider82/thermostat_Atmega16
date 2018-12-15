@@ -18,8 +18,9 @@ main.d main.o: .././main.c .././project_inkub.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\eeprom.h \
- .././bits_macros.h .././driver_nokia5110.h .././module_ds18b20.h \
- .././ds18b20/OWIPolled.h .././ds18b20/OWIdefs.h .././ds18b20/compilers.h \
+ .././bits_macros.h .././driver_nokia5110.h .././dht11.h \
+ .././module_ds18b20.h .././ds18b20/OWIPolled.h .././ds18b20/OWIdefs.h \
+ .././ds18b20/compilers.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  .././ds18b20/OWIDeviceSpecific.h .././ds18b20/OWIHighLevelFunctions.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
@@ -69,6 +70,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././bits_macros.h:
 
 .././driver_nokia5110.h:
+
+.././dht11.h:
 
 .././module_ds18b20.h:
 

@@ -107,10 +107,14 @@ void lcd_put_char(uint8_t symbol,uint8_t flag){
 		
 		temp=(flag==INVERSION)? ~pgm_read_byte(ptr+i):pgm_read_byte(ptr+i);
 		//Передаем 5 байт этого символа
+		
 		writedata(temp);
+		writedata(temp);
+		
 	}
 	//_delay_ms(250);
 	temp=(flag==INVERSION)? 0xFF:0;
+	writedata(temp);
 	writedata(temp);
 }
 //****************************************************************************************************************

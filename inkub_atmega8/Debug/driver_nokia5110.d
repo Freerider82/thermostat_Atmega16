@@ -19,8 +19,8 @@ driver_nokia5110.d driver_nokia5110.o: .././driver_nokia5110.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\eeprom.h \
- .././bits_macros.h .././driver_nokia5110.h .././lcd_nokia5110pin.h \
- .././Font_6x8.h
+ .././bits_macros.h .././driver_nokia5110.h .././dht11.h \
+ .././lcd_nokia5110pin.h .././Font_6x8.h
 
 .././project_inkub.h:
 
@@ -65,6 +65,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././bits_macros.h:
 
 .././driver_nokia5110.h:
+
+.././dht11.h:
 
 .././lcd_nokia5110pin.h:
 
