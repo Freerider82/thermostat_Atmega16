@@ -206,19 +206,19 @@ int main(void)
 				}
 				
 				clearram();
-				printf("%d.%d",INTEGER(temperature[0]),FRACTION(temperature[0]));
-				cursorxy(30,0);
-				printf("%d.%d",INTEGER(temperature[1]),FRACTION(temperature[1]));
+				cursorxy(0,0);
+				printf("%d.%d 1д",INTEGER(temperature[0]),FRACTION(temperature[0]));
 				cursorxy(0,1);
-				printf("H %d L %d",valueHigh,valueHigh-2*SHORT_LIMIT_TEMP);
+				printf("%d.%d 2д",INTEGER(temperature[1]),FRACTION(temperature[1]));
 				cursorxy(0,2);
-				printf("Верх %d.%d",INTEGER(tempHigh),FRACTION(tempHigh));
+				printf("%d.%d Ср",INTEGER(averageTemperature),FRACTION(averageTemperature));
 				cursorxy(0,3);
-				printf("Rt %d dT %d",run_out_temperature,run_out_temperature-valueHigh );
+				printf("%d.%d Пр",INTEGER(tempHigh),FRACTION(tempHigh));
 				cursorxy(0,4);
-				printf("PWM %d Fl %d",OCR1A,flag.ts.ValueHighIsChange);
+				printf("%d.%d %d.%d",INTEGER(run_out_temperature-valueHigh),FRACTION(run_out_temperature-valueHigh),INTEGER(delta_runOutTemp),FRACTION(delta_runOutTemp) );
 				cursorxy(0,5);
-				printf("Средняя %d.%d",INTEGER(averageTemperature),FRACTION(averageTemperature));
+				printf("М: %d%c",PERCENT_PWM(OCR1A),'%');
+				
 				
 				//Если кнопка энкодера не нажата
 				if(BitIsSet(PIN_ENCODER,PIN_BIT_ENCODER_BUTTON)) flag.ts.ButtonIsPressed=0;
