@@ -7,7 +7,7 @@
 
 #include "project_inkub.h"
 #include "module_ds18b20.h"
-#include "myUart.h"
+//#include "myUart.h" //Нужно переделать под регистры atmega328p
 
 
 
@@ -420,33 +420,57 @@ void settingPreferences(uint8_t item){
 void init_mc(){
 	
 	#ifdef _DEBUG
-	DDRB=1<<DDB1 ;
+	//DDRB=1<<DDB1 ;
 	#endif
 	
-	TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (1<<CS02) | (0<<CS01) | (0<<CS00);
-	TIMSK=1<<OCIE0;
-	OCR0=8;
+	// Timer/Counter 0 initialization
+	// Clock source: System Clock
+	// Clock value: 15,625 kHz
+	// Mode: Normal top=0xFF
+	// OC0A output: Disconnected
+	// OC0B output: Disconnected
+	// Timer Period: 16,384 ms
+	
+	TCCR0B=(0<<WGM02) | (1<<CS02) | (0<<CS01) | (1<<CS00);
+	TCNT0=0x00;
+	OCR0A=16;//Прерывания через 1 мс
+	// Timer/Counter 0 Interrupt(s) initialization
+	TIMSK0=(0<<OCIE0B) | (1<<OCIE0A) | (0<<TOIE0);
 	
 	// Timer/Counter 1 initialization
 	// Clock source: System Clock
-	// Clock value: 1,953 kHz
-	// Mode: Fast PWM top=0x00FF
-	// OC1A output: Non-Inverted PWM
-	// Timer Period: 0,13107 s
+	// Clock value: 15,625 kHz
+	// Mode: Fast PWM top=0x03FF
+	// OC1A output: Disconnected
+	// OC1B output: Non-Inverted PWM
+	// Noise Canceler: Off
+	// Input Capture on Falling Edge
+	// Timer Period: 65,536 ms
 	// Output Pulse(s):
-	// OC1A Period: 0,13107 s Width: 65,793 ms
-	
-	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
+	// OC1B Period: 65,536 ms Width: 0 us
+	// Timer1 Overflow Interrupt: Off
+	// Input Capture Interrupt: Off
+	// Compare A Match Interrupt: Off
+	// Compare B Match Interrupt: Off
+	TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (1<<WGM11) | (1<<WGM10);
 	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (1<<CS12) | (0<<CS11) | (1<<CS10);
-	TCNT1=0;
+	TCNT1H=0x00;
+	TCNT1L=0x00;
+	ICR1H=0x00;
+	ICR1L=0x00;
+	OCR1AH=0x00;
+	OCR1AL=0x00;
+	OCR1BH=0x00;
+	OCR1BL=0x00;
+	TCNT1=0;	
 	
-	initLCD();
+	initLCD();	
 	
 	OWI_Init(BUS);
 }
 /***********************Прерывания********************************/
 
-ISR(TIMER0_COMP_vect ){
+ISR(TIMER0_COMPA_vect ){
 	TCNT0=0;
 	//cursorxy(0,5);
 	//printf("item %d fl %d",selectedItem,flag.ts.ButtonIsPressedInISR);

@@ -45,7 +45,7 @@
  */
 #warning CPU_FREQUENCY=F_CPU ?
  
-#define     CPU_FREQUENCY   2.000
+#define     CPU_FREQUENCY   16.000
 
 
 /*! \brief  Use internal pull-up resistor on 1-Wire buses.

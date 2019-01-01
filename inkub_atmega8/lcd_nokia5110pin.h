@@ -1,10 +1,10 @@
 // Connections between AVR and LCD.
-#define SCK		4
-#define SDI     3
-#define D_C		2
-#define _SCE    1
-#define _RES 	0
-#define PORT_LCD	PORTA
-#define DDR_LCD		DDRA
+#define SCK		5
+#define SDI     4
+#define D_C		3
+#define _SCE    2
+#define _RES 	1
+#define PORT_LCD	PORTC
+#define DDR_LCD		DDRC
 
 #define NOKIA_5110

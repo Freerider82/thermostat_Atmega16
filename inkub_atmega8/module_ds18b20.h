@@ -16,7 +16,7 @@
 #define DS18B20_READ_POWER_SUPPLY        0xb4
 
 //вывод, к которому подключены 1Wire устройства
-#define BUS   OWI_PIN_7
+#define BUS   OWI_PIN_2
 
 //количество устройств на шине 1Wire
 #define MAX_DEVICES       2
