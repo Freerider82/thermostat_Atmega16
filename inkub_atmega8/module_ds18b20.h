@@ -41,7 +41,7 @@
 
 #define  T_HIGH_START		370
 //Перенести в отд начальные параметры 
-#define  OCR1A_START		128
+#define  OCR1B_START		512
 #define  DELTA_PWM			10
 #define  SHORT_LIMIT_TEMP	10 //Предел температуры в градусах*10
 #define  DELTA_RUN_OUT_TEMP_START 8 //Начальный выбег температуры

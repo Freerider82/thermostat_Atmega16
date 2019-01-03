@@ -24,7 +24,7 @@ void settingPreferences(uint8_t);
 void init_mc(void);
 
 uint16_t e_tempHigh EEMEM = T_HIGH_START;
-uint8_t  e_valuePWM EEMEM = OCR1A_START;
+uint16_t  e_valuePWM EEMEM = OCR1B_START;
 uint8_t  e_deltaRunOutTemp EEMEM = DELTA_RUN_OUT_TEMP_START;
 uint8_t  e_manualOrAuto EEMEM = 0;
 uint8_t  e_contrastLCD = CONTRAST_LCD;
@@ -94,7 +94,7 @@ int main(void)
 		
 		if(tempHigh==0xFFFF){
 			eeprom_write_word(&e_tempHigh,T_HIGH_START);
-			eeprom_write_byte(&e_valuePWM,OCR1A_START);
+			eeprom_write_word(&e_valuePWM,OCR1B_START);
 			eeprom_write_byte(&e_deltaRunOutTemp,DELTA_RUN_OUT_TEMP_START);
 			eeprom_write_byte(&e_manualOrAuto,0);
 			eeprom_write_byte(&e_contrastLCD,CONTRAST_LCD);
@@ -102,7 +102,7 @@ int main(void)
 		
 		tempHigh=eeprom_read_word(&e_tempHigh);
 		delta_runOutTemp=eeprom_read_byte(&e_deltaRunOutTemp);
-		OCR1A=eeprom_read_byte(&e_valuePWM);
+		OCR1B=eeprom_read_word(&e_valuePWM);
 		manualOrAuto=eeprom_read_byte(&e_manualOrAuto);
 		contrastLcd=eeprom_read_byte(&e_contrastLCD);
 		//TO DO сделать автомат подсройку контраста а пока так 
@@ -178,13 +178,13 @@ int main(void)
 							if((lastValue==averageTemperature)&&(valueHigh!=tempHigh)){
 								//Увеличиваем мощность если тек темп-ра = прошлой
 								//и пока не достигли верхнего предела
-								OCR1A+=((OCR1A<255)&&(manualOrAuto&1==1))? 1:0;
+								OCR1B+=((OCR1B<1023)&&(manualOrAuto&1==1))? 1:0;
 							}
 						}
 						
 						//Если температура начала падать то увеличиваем мощность
 						if(averageTemperature < valueHigh-2*SHORT_LIMIT_TEMP){
-							OCR1A+=((OCR1A<256-DELTA_PWM)&&(manualOrAuto&1==1))? DELTA_PWM:0;
+							OCR1B+=((OCR1B<1024-DELTA_PWM)&&(manualOrAuto&1==1))? DELTA_PWM:0;
 							flag.ts.ValueHighIsChange=0;
 							send_SoundTextMessage(TEMP_IS_DOWN);
 						}
@@ -199,7 +199,7 @@ int main(void)
 							flag.ts.RunOutIsCalculate=1;
 							flag.ts.ValueHighIsChange=0;
 							if(run_out_temperature>valueHigh+delta_runOutTemp){
-								OCR1A-=((OCR1A>delta)&&(manualOrAuto&1==1))? delta:0;//delta это насколько изменится ШИМ
+								OCR1B-=((OCR1B>delta)&&(manualOrAuto&1==1))? delta:0;//delta это насколько изменится ШИМ
 							}
 						}
 					}
@@ -217,7 +217,7 @@ int main(void)
 				cursorxy(0,4);
 				printf("%d.%d %d.%d",INTEGER(run_out_temperature-valueHigh),FRACTION(run_out_temperature-valueHigh),INTEGER(delta_runOutTemp),FRACTION(delta_runOutTemp) );
 				cursorxy(0,5);
-				printf("М: %d%c",PERCENT_PWM(OCR1A),'%');
+				printf("М: %d%c",PERCENT_PWM(OCR1B),'%');
 				
 				
 				//Если кнопка энкодера не нажата
@@ -358,11 +358,11 @@ void settingPreferences(uint8_t item){
 			if(itemMenu==0)
 			{
 				itemMenu=item+1;
-				
+				 
 				switch(item)
 				{
 					case 0: limitHigh=1270;ptrInISR=&tempHigh;break;
-					case 1: limitHigh=254;ptrInISR=&OCR1A;break;
+					case 1: limitHigh=1022;ptrInISR=&OCR1B;break;
 					case 2: limitHigh=100;ptrInISR=&delta_runOutTemp;break;
 					case 3: limitHigh=1;ptrInISR=&manualOrAuto;break;
 					case 4: limitHigh=128;ptrInISR=&contrastLcd;break;
@@ -370,7 +370,7 @@ void settingPreferences(uint8_t item){
 					cli();
 					flag.ts.Settings=0;
 					eeprom_update_word(&e_tempHigh,tempHigh);
-					eeprom_update_byte(&e_valuePWM,OCR1A);
+					eeprom_update_word(&e_valuePWM,OCR1B);
 					eeprom_update_byte(&e_deltaRunOutTemp,delta_runOutTemp);
 					eeprom_update_byte(&e_manualOrAuto,manualOrAuto);
 					eeprom_update_byte(&e_contrastLCD,contrastLcd);
@@ -396,7 +396,7 @@ void settingPreferences(uint8_t item){
 			lcd_print(string[y],flagPrint);
 			switch(y){
 				case 0: printf("%d.%d",INTEGER(tempHigh),FRACTION(tempHigh));break;
-				case 1: printf("%d%c",PERCENT_PWM(OCR1A),'%');break;
+				case 1: printf("%d%c",PERCENT_PWM(OCR1B),'%');break;
 				case 2: printf("%d.%d",INTEGER(delta_runOutTemp),FRACTION(delta_runOutTemp));break;
 				case 3: ((manualOrAuto&1)==0)? printf("Ручн"):printf("Авт");break;
 				case 4: printf("%d",contrastLcd);break;
@@ -405,7 +405,7 @@ void settingPreferences(uint8_t item){
 		break;
 		// Остальные case это переход на окно изменения параметра, вывод значений большими цифрами
 		case 1:	printBigNumber(30,2,tempHigh,POINT);break;
-		case 2:	printBigNumber(30,2,PERCENT_PWM(OCR1A),NO_POINT);break;
+		case 2:	printBigNumber(30,2,PERCENT_PWM(OCR1B),NO_POINT);break;
 		case 3:	printBigNumber(30,2,delta_runOutTemp,POINT);break;
 		case 4: 		
 		cursorxy(0,2);
@@ -463,6 +463,7 @@ void init_mc(){
 	OCR1BH=0x00;
 	OCR1BL=0x00;
 	TCNT1=0;	
+	
 	
 	initLCD();	
 	

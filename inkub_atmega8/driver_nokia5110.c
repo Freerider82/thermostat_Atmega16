@@ -52,12 +52,14 @@ void clockdata(uint8_t bits_in){
 	
 	for (bitcnt=8; bitcnt>0; bitcnt--)
 	{
+		
 		ClearBit(PORT_LCD,SCK);// Set Clock Idle level LOW.
 		if ((bits_in&0x80)==0x80) {SetBit(PORT_LCD,SDI);}        // PCD8544 clocks in the MSb first.
 		else {ClearBit(PORT_LCD,SDI);}
+			_delay_loop_1(1);
 		SetBit(PORT_LCD,SCK);// Data is clocked on the rising edge of SCK.
 		bits_in=bits_in<<1;                        // Logical shift data by 1 bit left.
-		
+			_delay_loop_1(1);
 	}
 	
 }
