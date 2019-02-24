@@ -27,5 +27,5 @@
 #define A_HIGH			1<<PIN_A_ENCODER
 #define B_HIGH			1<<PIN_B_ENCODER
 
-#define PERCENT_PWM(x)  ((x)*100)/1024
+#define PERCENT_PWM(x)  ((uint32_t)(x)*100)/1024
 #endif

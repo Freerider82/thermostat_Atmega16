@@ -39,9 +39,9 @@
 #define DS18B20_11BIT_RES 64 // 11 bit thermometer resolution
 #define DS18B20_12BIT_RES 96 // 12 bit thermometer resolution
 
-#define  T_HIGH_START		370
+#define  T_HIGH_START		384
 //Перенести в отд начальные параметры 
-#define  OCR1B_START		512
+#define  OCR1B_START		644
 #define  DELTA_PWM			10
 #define  SHORT_LIMIT_TEMP	10 //Предел температуры в градусах*10
 #define  DELTA_RUN_OUT_TEMP_START 8 //Начальный выбег температуры

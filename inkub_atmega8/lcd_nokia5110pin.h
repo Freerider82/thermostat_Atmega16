@@ -1,4 +1,4 @@
-// Connections between AVR and LCD.
+// Connections between AVR and LCD.	
 #define SCK		5
 #define SDI     4
 #define D_C		3

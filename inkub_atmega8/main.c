@@ -13,7 +13,7 @@
 
 #include <avr/interrupt.h>
 
-#define  _DEBUG
+//#define  _DEBUG
 
 
 
@@ -217,7 +217,7 @@ int main(void)
 				cursorxy(0,4);
 				printf("%d.%d %d.%d",INTEGER(run_out_temperature-valueHigh),FRACTION(run_out_temperature-valueHigh),INTEGER(delta_runOutTemp),FRACTION(delta_runOutTemp) );
 				cursorxy(0,5);
-				printf("М: %d%c",PERCENT_PWM(OCR1B),'%');
+				printf("М: %d",PERCENT_PWM(OCR1B));
 				
 				
 				//Если кнопка энкодера не нажата
@@ -396,7 +396,7 @@ void settingPreferences(uint8_t item){
 			lcd_print(string[y],flagPrint);
 			switch(y){
 				case 0: printf("%d.%d",INTEGER(tempHigh),FRACTION(tempHigh));break;
-				case 1: printf("%d%c",PERCENT_PWM(OCR1B),'%');break;
+				case 1: printf("%d",PERCENT_PWM(OCR1B));break;
 				case 2: printf("%d.%d",INTEGER(delta_runOutTemp),FRACTION(delta_runOutTemp));break;
 				case 3: ((manualOrAuto&1)==0)? printf("Ручн"):printf("Авт");break;
 				case 4: printf("%d",contrastLcd);break;
