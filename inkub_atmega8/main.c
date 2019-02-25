@@ -7,6 +7,7 @@
 
 #include "project_inkub.h"
 #include "module_ds18b20.h"
+#include <avr/wdt.h>
 //#include "myUart.h" //Нужно переделать под регистры atmega328p
 
 
@@ -82,7 +83,7 @@ int main(void)
 	uint8_t delta=0;
 	
 	flag.byte=0; //Все флаги в 0
-	
+	wdt_enable(WDTO_8S);
 	init_mc();	
 		
 		
@@ -110,20 +111,21 @@ int main(void)
 		
 		//Определение  кол-ва датчиков, запись их адрессов в allDevices
 		crcFlag = OWI_SearchDevices(allDevices, MAX_DEVICES, BUS, &iDevices);
-		if(iDevices!=MAX_DEVICES) crcFlag=FEWER_DEVICES;		
-				
-		
-		
-		send_SoundTextMessage(crcFlag);
-		cursorxy(0,1);
-		printf("К-во дат-ков %d",iDevices);
-		
+		if(iDevices!=MAX_DEVICES) {
+			crcFlag=FEWER_DEVICES;		
+			send_SoundTextMessage(crcFlag);
+			cursorxy(0,1);
+			printf("К-во д-ков %d",iDevices);	
+			while(1){wdt_reset();}	//Зависание в этом месте если кол-во датчиков <2
+			
+		}
 		//Настройка датчиков на опр.разрешение
 		for(uint8_t i=0;i<MAX_DEVICES;i++){
 			while(DS18B20_WriteScratchpad(BUS, allDevices[i].id, 0, 0, DS18B20_12BIT_RES)!=WRITE_SUCCESSFUL);
 		}
 		
 		while (1){
+			wdt_reset();
 			if (flag.ts.Settings==0)
 			{
 				//Чтение температуры 2 датчиков
@@ -132,8 +134,9 @@ int main(void)
 					if (crcFlag != READ_SUCCESSFUL){
 						send_SoundTextMessage(crcFlag);
 						cursorxy(0,1);
-						printf("Датчик %d",i+1);
+						printf("Д-чик %d",i+1);
 						ClearBit(DDR_POWER,PIN_POWER);
+						wdt_reset();
 					}
 					else{
 						i++;
@@ -480,6 +483,7 @@ ISR(TIMER0_COMPA_vect ){
 		regAB=128;//Как только А==В==0
 	}
 	else if(regAB!=0){
+		wdt_reset();
 		switch(statePort){
 			case AB_HIGH:
 			if(regAB!=128){

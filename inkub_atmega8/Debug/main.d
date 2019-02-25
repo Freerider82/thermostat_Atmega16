@@ -25,7 +25,8 @@ main.d main.o: .././main.c .././project_inkub.h \
  .././ds18b20/OWIDeviceSpecific.h .././ds18b20/OWIHighLevelFunctions.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  .././ds18b20/OWIBitFunctions.h .././ds18b20/OWIPolled.h \
- .././ds18b20/OWIcrc.h
+ .././ds18b20/OWIcrc.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h
 
 .././project_inkub.h:
 
@@ -94,3 +95,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././ds18b20/OWIPolled.h:
 
 .././ds18b20/OWIcrc.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h:
